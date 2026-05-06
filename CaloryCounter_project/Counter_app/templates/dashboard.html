@@ -1,0 +1,106 @@
+{% extends 'master/base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Daily Consumed Calories, {{ request.user.username }}
+    </h2>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Consumed Calories
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ consumed_calories }} kcal</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    Required Calories
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ required_calorie }} kcal</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    Less / More
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ less_more }} kcal</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="alert alert-info">
+        <strong>Suggestion:</strong> {{ suggestion }}
+    </div>
+
+    <h4 class="mb-3">
+        Today Consumed Calories: {{ total_count }}
+    </h4>
+
+
+    <a class="btn btn-primary mb-3" href="{% url 'consumed_calories' %}">
+        Add Calorie
+    </a>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <table class="table table-striped table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>SL</th>
+                        <th>Item Name</th>
+                        <th>Consumed Calorie</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for data in today_consumed_data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ data.item_name }}</td>
+                        <td>{{ data.calorie }} kcal</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning"
+                               href="{% url 'edit_calorie' data.id %}">
+                                Edit
+                            </a>
+                            <a class="btn btn-sm btn-danger"
+                               href="{% url 'delete_calorie' data.id %}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            No calorie data found today
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
