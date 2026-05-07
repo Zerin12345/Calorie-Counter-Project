@@ -5,8 +5,7 @@ class User(AbstractUser):
     
     def __str__(self):
         return f'{self.username}'
-
-#Name, Age, Gender, Height, Weight
+        
 class BasicInfoModel(models.Model):
     GENDER_TYPES = [
         ('Male','Male'),
@@ -28,7 +27,7 @@ class BasicInfoModel(models.Model):
     def __str__(self):
         return f'{self.name}'
     
-# consumed calories (Item name, Calorie consumed)
+
 class ConsumedCalories(models.Model):
     item_name = models.CharField(max_length=200, null=True)
     calorie = models.FloatField(null=True)
